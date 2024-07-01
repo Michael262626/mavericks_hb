@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class Utils {
-    public final static String TEST_VIDEO_LOCATION="C:\\Users\\DELL\\Videos\\Facebook_1690276956036.mp4";
+    public final static String TEST_VIDEO_LOCATION="/home/michael/applications/src/main/java/com/mavericks/mavericksHub/assets/java.jpeg";
     public static UploadMediaFileRequest buildUploadMediaRequest(InputStream streams) throws IOException {
         UploadMediaFileRequest request = new UploadMediaFileRequest();
         MultipartFile video1 = new MockMultipartFile("short video drums",streams);

@@ -23,15 +23,29 @@ public class AuthenticationControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Test
-    void autheticateUserTest() throws Exception {
+    public void autheticateUserTest() throws Exception {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("email@gmail.com");
         loginRequest.setPassword("password");
         ObjectMapper mapper = new ObjectMapper();
         mockMvc.perform(post("/api/v1/auth")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsBytes(loginRequest))).andExpect(status().isOk())
+                .content(mapper.writeValueAsBytes(loginRequest)))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
+    @Test
+    public void authenticateUserWithInvalidUsernameTest() throws Exception {
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername("emaill@gmail.com");
+        loginRequest.setPassword("password");
+        ObjectMapper mapper = new ObjectMapper();
+        mockMvc.perform(post("/api/v1/auth")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsBytes(loginRequest)))
+                .andExpect(status().isUnauthorized())
+                .andDo(print());
+    }
+
 
 }

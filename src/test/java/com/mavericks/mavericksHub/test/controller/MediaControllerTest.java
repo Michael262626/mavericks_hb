@@ -33,7 +33,7 @@ public class MediaControllerTest {
             MultipartFile file = new MockMultipartFile("mediaFile",inputStream);
             mockMvc.perform(multipart("/api/v1/media")
                             .file(file.getName(),file.getBytes())
-                             .part(new MockPart("userId","200".getBytes()))
+                            .part(new MockPart("userId","200".getBytes()))
                             .part(new MockPart("description","test description".getBytes()))
                             .part(new MockPart("category","ACTION".getBytes()))
                     .contentType(MediaType.MULTIPART_FORM_DATA))

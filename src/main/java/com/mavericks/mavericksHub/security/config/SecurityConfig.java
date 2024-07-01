@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import static org.springframework.http.HttpMethod.POST;
+
 @AllArgsConstructor
 @Configuration
 public class SecurityConfig {
@@ -20,10 +22,10 @@ public class SecurityConfig {
         var authenticationFilter = new CustomerUsernameAndPasswordAuthFilter(authenticationManager);
         authenticationFilter.setFilterProcessesUrl("/api/v1/auth");
         return http.csrf(AbstractHttpConfigurer::disable)
-                .cors(c->c.disable())
+                .cors(AbstractHttpConfigurer::disable)
                 .addFilterAt(authenticationFilter, BasicAuthenticationFilter.class)
-                .authorizeHttpRequests(c->c.anyRequest().permitAll())
+                .authorizeHttpRequests(c->c.requestMatchers(POST,"/api/v1/auth").permitAll()
+                        .requestMatchers("/api/v1/media").hasAuthority("USER"))
                 .build();
     }
-
 }
